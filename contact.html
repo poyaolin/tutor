@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <title>聯絡我 - 林老師家教</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>聯絡我｜家教網站</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header>
-    <h1>林老師家教</h1>
     <nav>
-      <a href="index.html">首頁</a>
-      <a href="about.html">關於我</a>
-      <a href="pricing.html">費用方案</a>
-      <a href="contact.html">聯絡我</a>
+      <h1>我的家教網站</h1>
+      <ul>
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="about.html">關於我</a></li>
+        <li><a href="pricing.html">收費方案</a></li>
+        <li><a href="contact.html" class="active">聯絡我</a></li>
+      </ul>
     </nav>
   </header>
 
-  <section class="content">
-    <h2>聯絡我</h2>
-    <p>Email：lin.tutor@example.com</p>
-    <p>LINE ID：@tutorlin</p>
-
-    <form action="https://formspree.io/f/你的表單ID" method="POST">
-      <label>姓名：<input type="text" name="name" required></label>
-      <label>Email：<input type="email" name="email" required></label>
-      <label>訊息：<textarea name="message" required></textarea></label>
-      <button type="submit">送出</button>
-    </form>
-  </section>
+  <main>
+    <section class="contact">
+      <h2>聯絡我</h2>
+      <p>若有任何課程相關問題，歡迎透過下列方式聯絡我：</p>
+      <ul>
+        <li>📧 Email：<a href="mailto:yourname@example.com">yourname@example.com</a></li>
+        <li>📱 LINE：@yourlineid</li>
+      </ul>
+    </section>
+  </main>
 
   <footer>
-    <p>© 2025 林老師家教</p>
+    <p>© 2025 我的家教網站</p>
   </footer>
 </body>
 </html>
