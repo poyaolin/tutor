@@ -79,7 +79,7 @@
   <script>
     async function loadBookings() {
       try {
-        const res = await fetch("/api/bookings");
+        const res = await fetch("https://script.google.com/macros/s/AKfycbw2gB-bSELYGEPspL_mgRGvAnqn1nrN311yRRpxYfgQRvjcBxwxQMLCwqCDF-zLUauC/exec");
         if (!res.ok) throw new Error("伺服器錯誤");
         const bookings = await res.json();
 
