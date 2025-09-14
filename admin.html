@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>預約管理後台</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .admin-container {
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #fff;
+      box-shadow: 0 0 6px rgba(0,0,0,0.05);
+      border-radius: 6px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.75rem;
+      text-align: center;
+    }
+    th {
+      background-color: #f5f5f5;
+    }
+    td pre {
+      text-align: left;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- 導覽列 -->
+  <header>
+    <nav>
+      <h1>家教平台管理後台</h1>
+      <ul>
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="booking.html">學生預約</a></li>
+        <li><a href="admin.html" class="active">管理後台</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 預約列表 -->
+  <main>
+    <div class="admin-container">
+      <h2>所有預約紀錄</h2>
+      <p>以下顯示學生送出的所有預約（最新在上方）：</p>
+      <table id="bookingTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>姓名</th>
+            <th>Email</th>
+            <th>電話</th>
+            <th>備註</th>
+            <th>預約時段</th>
+            <th>建立時間</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="7">載入中...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- 頁尾 -->
+  <footer>
+    <p>&copy; 2025 家教平台. All rights reserved.</p>
+  </footer>
+
+  <script>
+    async function loadBookings() {
+      try {
+        const res = await fetch("/api/bookings");
+        if (!res.ok) throw new Error("伺服器錯誤");
+        const bookings = await res.json();
+
+        const tbody = document.querySelector("#bookingTable tbody");
+        tbody.innerHTML = "";
+
+        if (bookings.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7">目前沒有任何預約</td></tr>`;
+          return;
+        }
+
+        bookings.forEach(b => {
+          const row = document.createElement("tr");
+
+          const slotsText = b.slots.map(s => `${s.day} ${s.time}`).join("\n");
+
+          row.innerHTML = `
+            <td>${b.id}</td>
+            <td>${b.name}</td>
+            <td>${b.email}</td>
+            <td>${b.phone}</td>
+            <td>${b.message || ""}</td>
+            <td><pre>${slotsText}</pre></td>
+            <td>${b.created_at}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        console.error(err);
+        document.querySelector("#bookingTable tbody").innerHTML = 
+          `<tr><td colspan="7">載入失敗，請稍後再試</td></tr>`;
+      }
+    }
+
+    loadBookings();
+  </script>
+</body>
+</html>
