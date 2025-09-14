@@ -256,6 +256,10 @@
         slots: selected
       };
 
+      const submitBtn = this.querySelector(".submit-btn");
+      submitBtn.disabled = true;
+      submitBtn.innerText = "送出中...";
+
       try {
         const response = await fetch("https://script.google.com/macros/s/AKfycbw2gB-bSELYGEPspL_mgRGvAnqn1nrN311yRRpxYfgQRvjcBxwxQMLCwqCDF-zLUauC/exec", {
           method: "POST",
@@ -265,16 +269,21 @@
           body: JSON.stringify(data)
         });
 
-        if (response.ok) {
-          alert("預約成功！我們將盡快與您聯繫。");
+        const result = await response.json();
+
+        if (result.status === "success") {
+          alert(result.message);
           this.reset();
           document.querySelectorAll('.schedule td.selected').forEach(cell => cell.classList.remove('selected'));
         } else {
-          alert("預約失敗，請稍後再試。");
+          alert("預約失敗：" + result.message);
         }
       } catch (error) {
         console.error("Error:", error);
         alert("連線錯誤，請檢查網路或伺服器設定。");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "送出預約";
       }
     });
   </script>
